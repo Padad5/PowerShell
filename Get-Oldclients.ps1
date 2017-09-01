@@ -1,0 +1,3 @@
+﻿$OldClients = Get-ADcomputer -Filter {(operatingsystem -like "*xp*") -or (operatingsystem -like "*2000*") -or (operatingsystem -like "*2003*")} -Property Name,OperatingSystem,OperatingSystemServicePack,lastlogontimestamp,IPv4Address
+ 
+$OldClients | Where-Object {$_.operatingsystem -like "*xp*"} | Sort-Object lastlogontimestamp |  Format-Table Name,IPv4Address,OperatingSystem,OperatingSystemServicePack,@{name=“lastlogontimestamp”; expression={[datetime]::fromfiletime($_.lastlogontimestamp)}} -Wrap -AutoSize
