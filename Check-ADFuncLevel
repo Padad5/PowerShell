@@ -1,0 +1,13 @@
+#$Results = @()
+
+$DCs = Get-ADDomainController -Filter * 
+
+foreach ( $DC in $DCs ) {
+    $Result = [PSCustomObject] @{
+        DC = $DC
+        DomainMode = (Get-ADDomain -Server $DC).DomainMode
+        ForestMode = (Get-ADForest -Server $DC).ForestMode
+    }
+    $Results += $Result
+    $Result
+}
